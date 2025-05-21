@@ -29,9 +29,10 @@ class GambarLandingResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('gambar')
-                    ->required()
-                    ->maxLength(255),
+                Forms\Components\FileUpload::make('gambar')
+                    ->image()
+                    ->directory('storage/')
+                    ->required(),
                 Forms\Components\TextInput::make('link')
                     ->required()
                     ->maxLength(255),
@@ -45,8 +46,7 @@ class GambarLandingResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('gambar')
-                    ->searchable(),
+                Tables\Columns\ImageColumn::make('gambar'),
                 Tables\Columns\TextColumn::make('link')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
@@ -70,16 +70,16 @@ class GambarLandingResource extends Resource
             Tables\Actions\Action::make('order_up')->label('')
                 ->icon('heroicon-o-arrow-up')
                 ->action(function (GambarLanding $record) {
-                    $currentOrder = $record->order;
-                    $swapRecord = GambarLanding::where('order', $currentOrder - 1)->first();
+                    $currentOrder = $record->position;
+                    $swapRecord = GambarLanding::where('position', $currentOrder - 1)->first();
                     if ($swapRecord) {
-                        $record->order = 0;
+                        $record->position = 0;
                         $record->save();
 
-                        $swapRecord->order = $currentOrder;
+                        $swapRecord->position = $currentOrder;
                         $swapRecord->save();
 
-                        $record->order = $currentOrder-1;
+                        $record->position = $currentOrder-1;
                         $record->save();
                     }
                 }),
@@ -87,16 +87,16 @@ class GambarLandingResource extends Resource
             Tables\Actions\Action::make('order_down')->label('')
                 ->icon('heroicon-o-arrow-down')
                 ->action(function (GambarLanding $record) {
-                    $currentOrder = $record->order;
-                    $swapRecord = GambarLanding::where('order', $currentOrder + 1)->first();
+                    $currentOrder = $record->position;
+                    $swapRecord = GambarLanding::where('position', $currentOrder + 1)->first();
                     if ($swapRecord) {
-                        $record->order = 0;
+                        $record->position = 0;
                         $record->save();
 
-                        $swapRecord->order = $currentOrder;
+                        $swapRecord->position = $currentOrder;
                         $swapRecord->save();
 
-                        $record->order = $currentOrder+1;
+                        $record->position = $currentOrder+1;
                         $record->save();
                     }
                 }),

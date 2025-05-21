@@ -16,4 +16,12 @@ class GambarLanding extends Model
         'position',
     ];
 
+    
+    protected static function booted()
+    {
+        static::addGlobalScope('position', function ($query) {
+            $query->orderBy('position');
+        });
+    }
+
 }
