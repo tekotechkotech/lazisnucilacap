@@ -36,9 +36,9 @@ class GambarLandingResource extends Resource
                 Forms\Components\TextInput::make('link')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('position')
-                    ->required()
-                    ->maxLength(255),
+                // Forms\Components\TextInput::make('position')
+                //     ->required()
+                //     ->maxLength(255),
             ]);
     }
 
@@ -57,8 +57,8 @@ class GambarLandingResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('position')
-                    ->searchable(),
+                // Tables\Columns\TextColumn::make('position')
+                //     ->searchable(),
             ])
             ->filters([
                 //
